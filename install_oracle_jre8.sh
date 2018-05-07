@@ -40,10 +40,10 @@ echo $JRE_HOME
 # sudo rm jai_imageio-1_1-lib-linux-amd64-jdk.bin
 #  cd ~
 
-echo "End of installation - DO NOT FORGET THE FOLLOWING STEPS:"
+# echo "End of installation - DO NOT FORGET THE FOLLOWING STEPS:"
 
-echo "Do not forget to remove original JAI files from the GeoServer WEB-INF/lib folder"
-echo "http://docs.geoserver.org/stable/en/user/production/java.html#production-java"
+# echo "Do not forget to remove original JAI files from the GeoServer WEB-INF/lib folder"
+# echo "http://docs.geoserver.org/stable/en/user/production/java.html#production-java"
 
-echo "Download policies from http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" and replace the two files in JRE_HOME/lib/security"
+# echo "Download policies from http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" and replace the two files in JRE_HOME/lib/security"
 

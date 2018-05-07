@@ -2,6 +2,9 @@
 # Pas encore de dépot !? Uniquement v8 !?
 #
 # Avoir installé Oracle java JRE 8
+
+cd ~
+
 wget http://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.8/bin/apache-tomcat-9.0.8.zip
 unzip apache-tomcat-9.0.8.zip
 rm apache-tomcat-9.0.8.zip
