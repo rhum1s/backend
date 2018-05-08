@@ -51,6 +51,7 @@ echo "  ... done."
 echo "- Configuring git ..."
 git config --global user.name "${git_lgn}"
 git config --global user.email "${git_mail}"
+git config core.fileMode false
 echo "  ... done."
 
 echo "- Installing fail2ban"
