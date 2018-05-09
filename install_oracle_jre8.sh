@@ -1,4 +1,8 @@
-# Install Oracle JDK 8 (JRE + dev) on ubuntu 18
+# Install Oracle JDK 8 (JRE + dev)
+# Testé avec Ubuntu 16.04.4 LTS
+
+# Exit on error
+set -e
 
 cd ~
 

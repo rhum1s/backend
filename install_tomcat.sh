@@ -15,7 +15,6 @@ read -sp 'Tomcat admin password: ' gpwd
 echo "- WARNING - Will delete /opt/tomcat ..." 
 cd ~ 
 read -p "Press enter to continue"
-# rm -r /opt/tomcat
 if [ -d "/opt/tomcat" ]; then rm -r /opt/tomcat; fi
 echo "  ... done."
 
@@ -37,6 +36,19 @@ echo "- Setting env ..."
 echo 'CATALINA_HOME="/opt/tomcat"' | sudo tee -a /etc/environment
 source /etc/environment
 echo $CATALINA_HOME
+echo "  ... done."
+
+echo echo "- Creating tomcat setenv.sh ..."
+cat /opt/tomcat/bin/setenv.sh <<EOL
+export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"
+export CATALINA_HOME="/opt/tomcat"
+export JAVA_OPTS="-server -Djava.awt.headless=true -Xms384M -Xmx512M"
+
+# export CATALINA_OPTS="$CATALINA_OPTS -XX:SoftRefLRUPolicyMSPerMB=36000"
+# export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"
+# export CATALINA_OPTS="$CATALINA_OPTS --XX:+UseParNewGC"
+EOL
 echo "  ... done."
 
 echo "- Creating tomcat admin user ..."
