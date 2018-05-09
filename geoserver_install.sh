@@ -51,6 +51,17 @@ cd ~
 rm -r jai_imageio-1_1
 echo "  ... done."
 
+echo "- Installing Oracle JCE Policy 8 ..."
+cd  ~
+if [ -f "/usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/local_policy.jar" ]; then sudo cp /usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/local_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/local_policy.jar.orig; fi
+if [ -f "/usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/local_policy.jar" ]; then sudo cp /usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/US_export_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/US_export_policy.jar.orig; fi
+wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
+unzip jce_policy-8.zip
+rm jce_policy-8.zip
+sudo mv UnlimitedJCEPolicyJDK8/*.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/policy/unlimited/
+rm -r UnlimitedJCEPolicyJDK8
+echo "  ... done."
+
 echo "- Installing Geoserver ..."
 if [ -d "~/geoserverTmp" ]; then rm -r ~/geoserverTmp; fi
 mkdir ~/geoserverTmp
