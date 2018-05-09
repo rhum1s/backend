@@ -47,7 +47,7 @@ rm jai_imageio-1_1-lib-linux-amd64.tar.gz
 cd jai_imageio-1_1/lib
 sudo mv *.jar /usr/lib/jvm/java-8-oracle/jre/lib/ext/
 sudo mv *.so /usr/lib/jvm/java-8-oracle/jre/lib/amd64/
-cd ../
+cd ~
 rm -r jai_imageio-1_1
 echo "  ... done."
 
