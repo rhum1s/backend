@@ -11,6 +11,7 @@ ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.
 # Grab user vars
 read -p 'Tomcat admin user: ' glgn
 read -sp 'Tomcat admin password: ' gpwd
+read -sp 'Geoserver data dir: ' gdd
 
 echo "- WARNING - Will delete /opt/tomcat ..." 
 cd ~ 
@@ -44,6 +45,7 @@ export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"
 export CATALINA_HOME="/opt/tomcat"
 export JAVA_OPTS="-server -Djava.awt.headless=true -Xms384M -Xmx512M"
+export GEOSERVER_DATA_DIR="$gdd"
 
 # export CATALINA_OPTS="$CATALINA_OPTS -XX:SoftRefLRUPolicyMSPerMB=36000"
 # export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"
