@@ -77,14 +77,14 @@ rm -r UnlimitedJCEPolicyJDK8
 echo "  ... done."
 
 echo "- Installing Geoserver ..."
-if [ -d "~/geoserverTmp" ]; then rm -r ~/geoserverTmp; fi
-mkdir ~/geoserverTmp
-cd ~/geoserverTmp
+if [ -d "/tmp/geoserverTmp" ]; then rm -r /tmp/geoserverTmp; fi
+mkdir /tmp/geoserverTmp
+cd /tmp/geoserverTmp
 wget -O geoserver.zip $gsurl 
 unzip geoserver.zip
 mv geoserver.war /opt/tomcat/webapps/
 cd ~
-rm -r geoserverTmp
+rm -r /tmp/geoserverTmp
 echo "  ... done."
 
 echo "- Restarting Tomcat for Geoserver to create files ..."
