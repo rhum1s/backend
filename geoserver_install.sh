@@ -1,4 +1,4 @@
-# Install and configure Geoserver 2.13.0 
+# Install and configure Geoserver 2.13.0, 2.12.3 
 # Testé avec Ubuntu 16.04.4 LTS
 # Avoir installé Oracle java JRE 8
 # Avoir installé Tomcat /opt/tomcat
@@ -8,6 +8,20 @@ set -e
 
 # Going home
 cd ~
+
+# Grab host ip
+ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
+
+# Grab user vars
+read -sp 'Geoserver master password: ' gmpwd
+read -sp 'Geoserver version: (12 or 13)' gv
+
+# Treating geoserver version for the good url etc.
+if [ $gv == 12 ]; then 
+    gsurl='https://sourceforge.net/projects/geoserver/files/GeoServer/2.12.3/geoserver-2.12.3-war.zip/download' 
+else 
+    gsurl="https://sourceforge.net/projects/geoserver/files/GeoServer/2.13.0/geoserver-2.13.0-war.zip/download"
+fi
 
 echo "- Stoping Tomcat ..."
 /opt/tomcat/bin/shutdown.sh
@@ -66,7 +80,7 @@ echo "- Installing Geoserver ..."
 if [ -d "~/geoserverTmp" ]; then rm -r ~/geoserverTmp; fi
 mkdir ~/geoserverTmp
 cd ~/geoserverTmp
-wget -O geoserver.zip https://sourceforge.net/projects/geoserver/files/GeoServer/2.13.0/geoserver-2.13.0-war.zip/download
+wget -O geoserver.zip $gsurl 
 unzip geoserver.zip
 mv geoserver.war /opt/tomcat/webapps/
 cd ~
@@ -89,13 +103,22 @@ mv /opt/tomcat/webapps/geoserver/WEB-INF/lib/jai_core-1.1.3.jar /opt/tomcat/weba
 mv /opt/tomcat/webapps/geoserver/WEB-INF/lib/jai_imageio-1.1.jar /opt/tomcat/webapps/geoserver/WEB-INF/lib/jai_imageio-1.1.jar.orig 
 echo "  ... done."
 
-echo "- Restarting Tomcat for Geoserver to create files ..."
+echo "- Restarting Tomcat ..."
 /opt/tomcat/bin/startup.sh
-sleep 30s
+sleep 60s
+echo "  ... done."
+
+echo "- Setting Geoserver master password ..."
+curl -u "admin:geoserver" -X PUT -H "Content-Type: application/json" -d '{"oldMasterPassword":"geoserver","newMasterPassword":'"$gmpwd"'}' http://$ip:8080/geoserver/rest/security/masterpw.xml
+# curl -u "admin:$gmpwd" http://$ip:8080/geoserver/rest/security/masterpw.xml
+echo "  ... done."
+
+echo "- Creating Geoserver super user then deleting admin"
+# http://host:8080/geoserver/rest/security/usergroup/service/default/users/
+# curl -v -u "admin:geoserver" -X POST -H "Content-Type: applicon" -d '{"userName": "LLLL", "password": "LLLLLLL", enabled: true}' http://host:8080/geoserver/rest/security/usergroup/service/default/users/
 echo "  ... done."
 
 # Ending
-ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
 echo "- Go to http://$ip:8080/geoserver"
 
 
