@@ -1,4 +1,4 @@
-# Installation de Tomcat
+ Installation de Tomcat
 # Testé avec Ubuntu 16.04.4 LTS
 # Avoir installé Oracle java JRE 8
 
@@ -46,6 +46,7 @@ export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"
 export CATALINA_HOME="/opt/tomcat"
 export JAVA_OPTS="-server -Djava.awt.headless=true -Xms384M -Xmx512M"
 export GEOSERVER_DATA_DIR="$gdd"
+export GEOSERVER_XSTREAM_WHITELIST="org.geoserver.rest.security.xml.JaxbUser" # For REST API bug when trying to create a user
 
 # export CATALINA_OPTS="$CATALINA_OPTS -XX:SoftRefLRUPolicyMSPerMB=36000"
 # export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"

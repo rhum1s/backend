@@ -13,8 +13,9 @@ cd ~
 ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
 
 # Grab user vars
-read -sp 'Geoserver master password: ' gmpwd
-read -sp 'Geoserver version: (12 or 13)' gv
+read -p 'Geoserver admin login: ' gmlgn
+read -sp 'Geoserver admin and master password: ' gmpwd
+read -p 'Geoserver version: (12 or 13)' gv
 
 # Treating geoserver version for the good url etc.
 if [ $gv == 12 ]; then 
@@ -114,8 +115,9 @@ curl -u "admin:geoserver" -X PUT -H "Content-Type: application/json" -d '{"oldMa
 echo "  ... done."
 
 echo "- Creating Geoserver super user then deleting admin"
-# http://host:8080/geoserver/rest/security/usergroup/service/default/users/
-# curl -v -u "admin:geoserver" -X POST -H "Content-Type: applicon" -d '{"userName": "LLLL", "password": "LLLLLLL", enabled: true}' http://host:8080/geoserver/rest/security/usergroup/service/default/users/
+curl -v -u "admin:geoserver" -X POST -H "Content-Type: application/json" -d '{"org.geoserver.rest.security.xml.JaxbUser":{"userName": "'"$gmlgn"'", "password": "'"$gmpwd"'", enabled: true}}' http://$ip:8080/geoserver/rest/security/usergroup/service/default/users/
+curl -v -u "admin:geoserver" -X POST http://$ip:8080/geoserver/rest/security/roles/service/default/role/ADMIN/user/$gmlgn/¶
+curl -v -u "$gmlgn:$gmpwd" -X DELETE http://$ip:8080/geoserver/rest/security/usergroup/service/default/user/admin
 echo "  ... done."
 
 # Ending
