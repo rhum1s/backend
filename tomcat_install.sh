@@ -44,7 +44,7 @@ cat /opt/tomcat/bin/setenv.sh <<EOL
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"
 export CATALINA_HOME="/opt/tomcat"
-export JAVA_OPTS="-server -Djava.awt.headless=true -Xms384M -Xmx512M"
+export JAVA_OPTS="-server -Duser.language=pt-US -Djava.awt.headless=true -Xms384M -Xmx512M -Xbootclasspath/a:/opt/tomcat/webapps/geoserver/WEB-INF/lib/marlin-0.7.5-Unsafe.jar -Dsun.java2d.renderer=org.marlin.pisces.MarlinRenderingEngine"
 export GEOSERVER_DATA_DIR="$gdd"
 export GEOSERVER_XSTREAM_WHITELIST="org.geoserver.rest.security.xml.JaxbUser" # For REST API bug when trying to create a user
 
