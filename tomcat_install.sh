@@ -1,4 +1,4 @@
- Installation de Tomcat
+# Installation de Tomcat
 # Testé avec Ubuntu 16.04.4 LTS
 # Avoir installé Oracle java JRE 8
 

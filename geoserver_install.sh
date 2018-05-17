@@ -104,6 +104,67 @@ mv /opt/tomcat/webapps/geoserver/WEB-INF/lib/jai_core-1.1.3.jar /opt/tomcat/weba
 mv /opt/tomcat/webapps/geoserver/WEB-INF/lib/jai_imageio-1.1.jar /opt/tomcat/webapps/geoserver/WEB-INF/lib/jai_imageio-1.1.jar.orig 
 echo "  ... done."
 
+echo "- Enabeling CORS in web.xml and changing filter for tomcat instead of jetty..."
+# Pour chaque header CORS dans le fichier de config
+# Calcul des numeros de lignes +1 et +4
+# Remplacement du texte en supprimant les commentaires
+first_done=0
+grep -n '<!-- Uncomment following filter to enable CORS -->' /opt/tomcat/webapps/geoserver/WEB-INF/web.xml | awk -F  ":" '{print $1}' | while read line; do
+
+    line_p1="$(($line + 1))"
+    line_p4="$(($line + 4))"
+    line_p3="$(($line + 3))"
+
+    if [ $first_done == 0 ]
+    then
+        sed -i -e  "$line_p1""s/.*/<filter>/" /opt/tomcat/webapps/geoserver/WEB-INF/web.xml
+        sed -i -e  "$line_p4""s/.*/<\/filter>/" /opt/tomcat/webapps/geoserver/WEB-INF/web.xml
+        sed -i -e  "$line_p3""s/.*/<filter-class>org.apache.catalina.filters.CorsFilter<\/filter-class>/" /opt/tomcat/webapps/geoserver/WEB-INF/web.xml # Changing jetty filter for tomcat one
+        first_done=1
+    else
+        sed -i -e  "$line_p1""s/.*/<filter-mapping>/" /opt/tomcat/webapps/geoserver/WEB-INF/web.xml
+        sed -i -e  "$line_p4""s/.*/<\/filter-mapping>/" /opt/tomcat/webapps/geoserver/WEB-INF/web.xml
+    fi
+done
+echo "  ... done."
+
+echo "- Installation des extensions pré-sélectionnées ..."
+# FIXME: URL différentes selon la version
+install_module(){
+        # install_module "http://..."
+        cd /tmp
+        if [ -d "/tmp/module" ]; then rm -r /tmp/module; fi
+        mkdir /tmp/module
+        url=$1;
+        wget -O module.zip "${url}"
+        unzip -o module.zip -d module
+        mv module/*.jar /opt/tomcat/webapps/geoserver/WEB-INF/lib/
+}
+
+if [ $gv == 12 ]; then
+    gsv="2.12.3"
+else
+    gsv="2.13.0"
+fi
+
+# CSS Styling
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-css-plugin.zip/download"
+# YSLD Styling
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-ysld-plugin.zip/download"
+# INSPIRE
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-inspire-plugin.zip/download"
+# CSW
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-csw-plugin.zip/download"
+# ImagePyramid
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-pyramid-plugin.zip/download"
+# Vector Tiles
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-vectortiles-plugin.zip/download"
+# WPS
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-wps-plugin.zip/download"
+# WCS 2.0 EO
+install_module "https://sourceforge.net/projects/geoserver/files/GeoServer/${gsv}/extensions/geoserver-${gsv}-wcs2_0-eo-plugin.zip/download"
+echo "  ... done."
+
 echo "- Restarting Tomcat ..."
 /opt/tomcat/bin/startup.sh
 sleep 60s
@@ -111,7 +172,6 @@ echo "  ... done."
 
 echo "- Setting Geoserver master password ..."
 curl -u "admin:geoserver" -X PUT -H "Content-Type: application/json" -d '{"oldMasterPassword":"geoserver","newMasterPassword":'"$gmpwd"'}' http://$ip:8080/geoserver/rest/security/masterpw.xml
-# curl -u "admin:$gmpwd" http://$ip:8080/geoserver/rest/security/masterpw.xml
 echo "  ... done."
 
 echo "- Creating Geoserver super user then deleting admin"
@@ -122,6 +182,4 @@ echo "  ... done."
 
 # Ending
 echo "- Go to http://$ip:8080/geoserver"
-
-
 
