@@ -9,6 +9,22 @@ set -e
 # Going home
 cd ~
 
+# Warning ! Will delete all
+read -p """
+ATTENTION - 
+Va supprimer toutes les données dans 
+/opt/tomcat/webapps/geoserver
+
+Souhaitez vous vraiment continuer? (y/n): 
+""" -n 1 -r
+echo  
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Lets'go"
+else 
+    exit
+fi
+
 # Grab host ip
 ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
 
