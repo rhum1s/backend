@@ -112,14 +112,8 @@ echo "- Installing PostGIS + pgrouting..."
 # FIXME: Repository depends on versions. Works only for xenial
 sudo apt-get install postgresql-9.6-postgis-2.4
 sudo apt-get install postgresql-9.6-pgrouting
-sudo apt-get install --no-install-recommends postgis-gui
-libgtk2.0-bin
-# TODO have shp2pgsql not only gui
+sudo apt-get install --no-install-recommends postgis
 echo "... done."
-
-
-
-
 
 echo "- Creating PostGIS templates ..."
 psql -U rhum -d postgres -c "CREATE DATABASE template_postgis;"
