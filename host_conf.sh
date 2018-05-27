@@ -56,7 +56,8 @@ git config core.fileMode false
 echo "  ... done."
 
 echo "- Installing fail2ban"
-echo "  TODO !"
+echo "  FIXME: Configure fail2ban !"
+sudo apt-get install fail2ban
 echo "  ... done."
 
 echo "- Installing screen and config files"
