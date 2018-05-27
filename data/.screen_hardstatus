@@ -1,0 +1,6 @@
+#!/bin/bash
+name=`uname -n | tr '[A-Z]' '[a-z]'`
+df1=`df -hP $HOME | sed -n '2p' | awk '{print $5}'`
+# df2=`df -hP /mnt/sdb | sed -n '2p' | awk '{print $5}'`
+echo "${name} | os: ${df1}"
+# echo "${name} | os: ${df1} | db: ${df2}"

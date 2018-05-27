@@ -1,0 +1,57 @@
+# Screen fonfig 
+# Romain souweine, 2013
+
+# general
+startup_message off # Supprimer le message de démarrage
+autodetach on # permettre de se détacher en cas de coupure.
+nonblock on # Si une fenêtre ne répond pas, ne pas bloquer toute la session en attendant une réponse.
+defscrollback 35000 # Permettre un retour en arrière plus grand, par défaut 100 lignes.
+altscreen on        # clean screen after man, vi, less...
+
+# bindkey
+bindkey -k F1 prev # Définir F11 et F12 (PAS F1 et F2) à l'affichage de la fenêtre précédente et suivante
+bindkey -k F2 next
+
+# visual bell
+vbell_msg "bell: window ~%"
+vbellwait 2
+vbell off
+
+# mouse wheel scroll
+termcapinfo xterm ti@:te@
+termcapinfo xterm ti@:te@
+termcapinfo xterm 'hs:ts=\E]2;:fs=07:ds=\E]2;screen07'
+
+# status [WARNING: Manque des commandes pour affichage dynamique]
+hardstatus off
+hardstatus alwayslastline
+backtick 1 60 60 /home/rhum/.screen_hardstatus # pour affichage dynamique
+hardstatus string "%{=  b}[ %{b}%1` ]%{B}[%= %{=  K}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{K}%?%+Lw%?%?%= %{B}]%{b}[ %Y-%m-%d %c ]"
+
+# shells
+screen -t bash 0
+screen -t bash 1
+screen -t bash 2
+screen -t bash 3
+screen -t bash 4
+select 0 # selection de la fenêtre 1
+
+
+# OLD ******************************************
+# Afficher une barre bleue, en dernière ligne, en rouge la fenêtre affichée en cours.
+# Avec le nom de la machine, la date (jj/mm/aa) et l'heure (hh:mm).
+# hardstatus on
+# hardstatus alwayslastline
+# hardstatus string '%{= 9w} %{G}% %{= 9g}%= %{= 9w}%?%-Lw%?%{= 9R}(%{W}%n*%f %t%?(%u)%?%{= 9R})%{= 9w}%?%+Lw%?%?%= %{g}'
+
+# Démarrer trois fenêtes au démarrage de screen 
+# screen bash
+# title "1"
+# screen bash
+# title "2"
+# screen bash
+# title "3"
+# select "1"
+
+
+

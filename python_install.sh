@@ -29,7 +29,7 @@ TODO configurer /home/rhum/.jupyter/jupyter_notebook_config.py
 # TODO: pouvoir récupérer un hashed password avec python >>> from notebook.auth import passwd; passwd()
 
 ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
-jupyter notebook --ip $ip
+jupyter notebook --ip $ip &
 
 
 # TODO: Soluton pour creation du hashed password http://jupyter-notebook.readthedocs.io/en/stable/public_server.html

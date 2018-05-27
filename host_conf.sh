@@ -3,6 +3,7 @@
 # Pour connaitre votre version : lsb_release -a
 # Must be run as root
 # Warning, root user will not be able to connect using ssh anymore
+# Warning: Must be launched in root backend/ directory
 
 # Exit on error
 set -e
@@ -56,6 +57,11 @@ echo "  ... done."
 
 echo "- Installing fail2ban"
 echo "  TODO !"
+echo "  ... done."
+
+echo "- Installing screen and config files"
+sudo apt-get install screen
+cp data/.screen* ~/
 echo "  ... done."
 
 echo "- Restarting SSH, you must then connect with new user"
