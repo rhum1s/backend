@@ -2,6 +2,7 @@
 # Testé avec Ubuntu 16.04.4 LTS
 # FIXME: Package depends on ubuntu versions
 # Files will go in /mnt/sdb/nginx_data folder. Must exist.
+# TIXME: Pas finalisé. Ne pas lancer en l'état.
 
 # Exit on error
 set -e
