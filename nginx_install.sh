@@ -37,6 +37,7 @@ echo "... done."
 
 echo "- Installing php7-fpm ..."
 sudo apt-get install php7.0 php7.0-fpm
+sudo apt-get install php7.0-curl
 sudo systemctl restart php7.0-fpm
 sudo systemctl status php7.0-fpm
 sudo systemctl restart nginx
