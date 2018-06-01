@@ -192,7 +192,7 @@ echo "  ... done."
 
 echo "- Creating Geoserver super user then deleting admin"
 curl -v -u "admin:geoserver" -X POST -H "Content-Type: application/json" -d '{"org.geoserver.rest.security.xml.JaxbUser":{"userName": "'"$gmlgn"'", "password": "'"$gmpwd"'", enabled: true}}' http://$ip:8080/geoserver/rest/security/usergroup/service/default/users/
-curl -v -u "admin:geoserver" -X POST http://$ip:8080/geoserver/rest/security/roles/service/default/role/ADMIN/user/$gmlgn/¶
+curl -v -u "admin:geoserver" -X POST http://$ip:8080/geoserver/rest/security/roles/service/default/role/ADMIN/user/$gmlgn
 curl -v -u "$gmlgn:$gmpwd" -X DELETE http://$ip:8080/geoserver/rest/security/usergroup/service/default/user/admin
 echo "  ... done."
 

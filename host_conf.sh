@@ -13,6 +13,7 @@ read -p 'Global username: ' glgn
 read -p 'SSH port: ' port
 read -p 'GITHub username: ' git_lgn
 read -p 'GITHub mail adress: ' git_mail
+read -p 'Mail adress to test mailutils: ' mailutils
 
 echo "- Check for updates ..."
 apt-get update
@@ -63,6 +64,12 @@ echo "  ... done."
 echo "- Installing screen and config files"
 sudo apt-get install screen
 cp data/.screen* ~/
+echo "  ... done."
+
+echo "- Mail Utils sending email from $the_host to $mailutils"
+sudo apt-get install mailutils
+the_host=`hostname -f`
+echo "Test" | mail -s "Testing" -aFrom:toto\<$the_host\> $mailutils
 echo "  ... done."
 
 echo "- Restarting SSH, you must then connect with new user"
