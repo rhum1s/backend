@@ -12,6 +12,7 @@ cd ~
 sudo add-apt-repository ppa:jonathonf/python-3.6
 sudo apt update
 sudo apt-get install python3.6
+sudo apt-get install python3.6-dev
 
 wget https://bootstrap.pypa.io/get-pip.py
 sudo python3.6 get-pip.py
@@ -30,7 +31,6 @@ TODO configurer /home/rhum/.jupyter/jupyter_notebook_config.py
 
 ip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
 jupyter notebook --ip $ip &
-
 
 # TODO: Soluton pour creation du hashed password http://jupyter-notebook.readthedocs.io/en/stable/public_server.html
 
